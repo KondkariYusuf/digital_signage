@@ -1,0 +1,152 @@
+/* styles.css */
+
+body {
+    font-family: 'Arial', sans-serif;
+}
+
+.navbar {
+    background: linear-gradient(90deg, #4488c7 30%, #5fc8db 100%);
+}
+
+.navbar-brand {
+    color: #fff;
+    font-weight: bold;
+}
+
+.navbar-nav .nav-link {
+    color: #fff;
+}
+
+.container {
+    margin-top: 20px;
+}
+
+h2 {
+    color: #007bff;
+}
+.card {
+    margin-bottom: 20px;
+    width: 100%; 
+}
+
+#videoList {
+    list-style: none;
+    padding: 0;
+}
+
+.video-item {
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+    margin-bottom: 20px;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+/* Display two videos per row on medium and larger screens */
+@media (min-width: 768px) {
+    .video-item {
+        width: 48%; /* Adjust as needed, considering margins and padding */
+        margin-right: 2%; /* Add some spacing between videos */
+    }
+
+    .video-item:nth-child(2n) {
+        margin-right: 0; /* Remove margin for every 2nd video in the row */
+    }
+}
+
+.video-item:hover {
+    transform: scale(1.02);
+}
+
+.video-item:hover {
+    transform: scale(1.02);
+}
+
+.video-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #007bff;
+}
+
+.video-player {
+    width: 100%;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+#analyticsContainer {
+    margin-top: 20px;
+}
+
+#viewCount {
+    font-size: 36px;
+    color: #007bff;
+}
+
+.refresh-btn {
+    margin-top: 10px;
+}
+
+.upload-form {
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    font-weight: bold;
+    color: #007bff;
+}
+
+.form-control {
+    border-radius: 5px;
+}
+
+.custom-file-input {
+    cursor: pointer;
+}
+
+.upload-btn {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+
+
+
+.list-group-item {
+    border: none;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    background-color: #f8f9fa;
+    transition: background-color 0.3s ease;
+}
+
+.list-group-item:hover {
+    background-color: #e9ecef;
+}
+
+.badge-primary {
+    background-color: #007bff;
+}
+
+#averageViewCount {
+    margin-top: 20px;
+    padding: 20px;
+    border: 1px solid #ced4da;
+    border-radius: 8px;
+    background-color: #f8f9fa;
+}

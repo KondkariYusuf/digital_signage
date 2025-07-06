@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Signage Analytics</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark">
+    <a class="navbar-brand" href="./index.html">Digital Signage Sytem</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="./index.html">Dashboard</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="./upload.html">Upload Video</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="./analysis.html">Video Analysis</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<!-- Main Content -->
+<div class="container">
+    <h2>Video Analytics</h2>
+    <div id="videoList" class="row">
+        <video class="video-player" controls="">
+            <source src="localhost:3000/videos/short1.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+    </div>
+    <div id="analyticsContainer">
+        <h3>Real-time View Count</h3>
+        <p>View Count: <span id="viewCount">Loading...</span></p>
+        <button class="btn btn-primary refresh-btn" onclick="refreshViewCount()">Refresh</button>
+    </div>
+</div>
+
+<!-- JavaScript and Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script>
+
+    // Function to fetch video data from the server
+function fetchVideoData() {
+    return fetch('/videoData')
+        .then(response => response.json())
+        .catch(error => {
+            console.error('Error fetching video data:', error);
+            throw error;
+        });
+}
+
+// Function to display videos in the list
+function displayVideos(videoData) {
+    const videoList = document.getElementById('videoList');
+    videoList.innerHTML = ''; // Clear existing content
+
+    Object.keys(videoData).forEach(clientID => {
+        videoData[clientID].forEach(video => {
+            const listItem = document.createElement('li');
+            listItem.className = 'card video-item';
+            listItem.innerHTML = `<div class="card-body">
+                                    <h5 class="card-title video-title">${video.name}</h5>
+                                    <video class="video-player" controls>
+                                      <source src="${video.path}" type="video/mp4">
+                                      Your browser does not support the video tag.
+                                    </video>
+                                    <p class="card-text">${video.description}</p>
+                                  </div>`;
+            videoList.appendChild(listItem);
+        });
+    });
+}
+
+// Function to update the video list on the page
+function updateVideoList() {
+    fetchVideoData()
+        .then(videoData => {
+            console.log("This is video data" + videoData)
+            displayVideos(videoData);
+        })
+        .catch(error => {
+            console.error('Error updating video list:', error);
+        });
+}
+
+// Initial update when the page loads
+updateVideoList();
+
+</script>
+
+</body>
+</html>
