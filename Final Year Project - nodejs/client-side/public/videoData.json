@@ -1,0 +1,28 @@
+{
+  "default": [
+    {
+      "name": "short1",
+      "path": "uploads/short1.mp4",
+      "pathToDownload": "http://localhost:3000/videos/short1.mp4",
+      "description": "This is text for short 1"
+    },
+    {
+      "name": "short2",
+      "path": "uploads/short2.mp4",
+      "pathToDownload": "http://localhost:3000/videos/short2.mp4",
+      "description": "This is text for short 2"
+    },
+    {
+      "name": "short3",
+      "path": "uploads/short3.mp4",
+      "pathToDownload": "http://localhost:3000/videos/short3.mp4",
+      "description": "This is text for short 3"
+    },
+    {
+      "name": "short4",
+      "path": "uploads/short4.mp4",
+      "pathToDownload": "http://localhost:3000/videos/short4.mp4",
+      "description": "This is text for short 4"
+    }
+  ]
+}

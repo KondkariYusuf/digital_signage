@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Analysis - Digital Signage Analytics</title>
+    <!-- Link to the common CSS file -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark">
+    <a class="navbar-brand" href="./index.html">Digital Signage Analytics</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="./index.html">Dashboard</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="./upload.html">Upload Video</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="./analysis.html">Video Analysis</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<!-- Main Content -->
+<div class="container">
+    <h2 class="mt-4">Video Analysis</h2>
+    <ul id="videoAnalysisList" class="list-group"></ul>
+    <div id="averageViewCount" class="mt-4">
+        <h4 class="mb-4">Average View Count</h4>
+        <p id="averageCount" class="h5">Loading...</p>
+    </div>
+</div>
+
+<!-- JavaScript and Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script>
+    // Dummy video analysis data (Replace this with your actual video analysis data
+
+    async function fetchVideoSummaryData() {
+        try {
+            const response = await fetch('http://localhost:4000/videoDataSummary');
+            const videoSummaryData = await response.json();
+            return videoSummaryData;
+        } catch (error) {
+            console.error('Error fetching video summary data:', error);
+            return null;
+        }
+    }
+
+    // Function to update the video analysis list
+    async function updateVideoAnalysisList() {
+        const videoAnalysisList = document.getElementById('videoAnalysisList');
+
+        // Fetch video summary data from the server
+        const videoSummaryData = await fetchVideoSummaryData();
+
+        if (videoSummaryData) {
+            // Clear the existing list
+            videoAnalysisList.innerHTML = '';
+
+            // Iterate through video summary data and update the list
+            videoSummaryData.forEach(video => {
+                const listItem = document.createElement('li');
+                listItem.className = 'list-group-item d-flex justify-content-between align-items-center';
+                listItem.innerHTML = `
+                    <div>
+                        <h5>${video.video_name}</h5>
+                        <p>Viewer Count: ${video.viewer_count}</p>
+                    </div>
+                    <span class="badge badge-primary badge-pill">${video.viewer_count} views</span>`;
+                videoAnalysisList.appendChild(listItem);
+            });
+        }
+    }
+
+    // Function to calculate and display the average view count
+    async function calculateAverageViewCount() {
+        const averageCountElement = document.getElementById('averageCount');
+
+        // Fetch video summary data from the server
+        const videoSummaryData = await fetchVideoSummaryData();
+
+        if (videoSummaryData) {
+            // Calculate the total views and average count
+            const totalViews = videoSummaryData.reduce((sum, video) => sum + video.viewer_count, 0);
+            const averageCount = totalViews / videoSummaryData.length;
+
+            if (!isNaN(averageCount)) {
+                averageCountElement.textContent = `Average View Count: ${averageCount.toFixed(2)} views`;
+            } else {
+                averageCountElement.textContent = 'Average View Count: N/A';
+            }
+        }
+    }
+
+    // Initial update when the page loads
+    updateVideoAnalysisList();
+    calculateAverageViewCount();
+
+    // Periodically update the video analysis list (adjust the interval as needed)
+    setInterval(updateVideoAnalysisList, 2000); 
+</script>
+
+</body>
+</html>
